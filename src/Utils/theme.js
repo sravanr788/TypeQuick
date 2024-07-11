@@ -1,33 +1,9 @@
 
-
-const superUserTheme = {
-    label: 'Super User',
-    background: '#262A33',
-    title: '#43FFAF',
-    typeBoxText: '#526777'
-}
-
-const darkMagic = {
+const twilightSpell = {
     label: 'Dark Magic',
     background: '#091F2C',
     title: '#A286B8',
     typeBoxText: '#91E4D1',
-}
-
-const bentoTheme = {
-    label:"Bento",
-    background: "#2D394D",
-    title: "#FF7A90",
-    typeBoxText: "#4A768D",
-    stats: "#FF7A90"
-}
-
-const futureFunkTheme = {
-    label: "Future Funk",
-    background: "#2E1A47",
-    title: "#fff",
-    typeBoxText: "#C18FFF",
-    stats: "#fff"
 }
 
 const aetherTheme = {
@@ -38,11 +14,44 @@ const aetherTheme = {
     stats: "#EEDAEA"
 }
 
+const neonNight = {
+    label: 'Neon Night',
+    background: '#0D0C1D',
+    title: '#E94560',
+    typeBoxText: '#0FF4C6',
+    stats: '#E94560'
+}
+
+const cosmicDust = {
+    label: 'Cosmic Dust',
+    background: '#2B2D42',
+    title: '#8D99AE',
+    typeBoxText: '#EDF2F4',
+    stats: '#8D99AE'
+}
+
+const electricBlue = {
+    label: 'Electric Blue',
+    background: '#001F3F',
+    title: '#0074D9',
+    typeBoxText: '#7FDBFF',
+    stats: '#0074D9'
+}
+
+const darkElegance = {
+    label: 'Dark Elegance',
+    background: '#000',
+    title: '#eee',
+    typeBoxText: '#eee',
+    stats: '#eee'
+}
+
 export const themeOptions = [
-    {value: superUserTheme, label: 'Super User'},
-    {value: darkMagic, label: 'Dark Magic'},
-    {value: bentoTheme, label: "Bento"},
-    {value: futureFunkTheme, label: "Future Funk"},
-    {value: aetherTheme, label: "Aether"}
+    {value: neonNight, label: 'Neon Night'},
+    {value: cosmicDust, label: 'Cosmic Dust'},
+    {value : darkElegance , label : 'Dark Elegance'},
+    {value: twilightSpell, label: 'Twilight Spell'},
+    {value: aetherTheme, label: "Aether"},
+    {value: electricBlue, label: 'Electric Blue'}
 ];
 

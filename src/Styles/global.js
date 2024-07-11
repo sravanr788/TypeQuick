@@ -2,7 +2,7 @@ import { createGlobalStyle } from "styled-components";
 
 
 export const GlobalStyles = createGlobalStyle`
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
 *{
     box-sizing: border-box;
 }
@@ -14,6 +14,9 @@ body{
     margin:0;
     transition: all 0.25s linear;
     overflow-y: scroll;
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-style: normal;
 }
 
 body::-webkit-scrollbar{
@@ -35,7 +38,7 @@ body::-webkit-scrollbar{
 .type-box{
     display:block;
     max-width: 1000px;
-    height: 140px;
+    height: 160px;
     margin-left:auto;
     margin-right:auto;
     overflow: hidden;
@@ -121,6 +124,9 @@ body::-webkit-scrollbar{
 .left-stats{
     width: 30%;
     padding: 30px;
+    display : flex;
+    flex-direction : column;
+    justify-content : space-between;
 }
 
 .right-stats{
@@ -136,7 +142,28 @@ body::-webkit-scrollbar{
     font-size: 30px;
     color: ${({theme})=>theme.title};
 }
+.reload {
+    display : flex;
+    font-size : 16px;
+    font-weight : 500;
+    margin : 22px 15px 0 72px;  
+    cursor : pointer ; 
+}
+.reload:hover {
+    color : white ;
+    transform : scale(1.1);
+    .p { color : white;
+    background : black}
+}
 
+.reload .p{
+    color : ${({theme})=>theme.background};
+    position : relative ;
+    top : 30px ; 
+    right :  75px;
+    padding : 4px;
+    
+}
 a{
     text-decoration: none;
     color: inherit;
@@ -186,7 +213,7 @@ a{
     width: 1000px;
     margin: auto;
     display: flex;
-    min-height: 15rem;
+    // min-height: 15rem;
     background: ${({theme})=>theme.typeBoxText};
     border-radius: 20px;
     justify-content: center;
@@ -214,7 +241,7 @@ a{
 
 .total-tests{
     width: 50%;
-    font-size: 3rem;
+    font-size: 2.5rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -236,9 +263,16 @@ a{
 
 .logo{
     display: flex;
-    gap: 10px;
+    // gap: 10px;
     justify-content: start;
     align-items: start;
+}
+
+.logo > .text {
+    margin : 10px 0;
+    position : relative;
+    right : 25px;
+    top : 2wpx;
 }
 
 .compare-btn{
@@ -262,15 +296,21 @@ a{
         border-radius: 4px; 
     }
 }
-
+.hover{
+background : black;
+border-radius : 3px;
+color : white;
+padding : 3px;
+}
 .active{
-    border: 1px solid;
+    border: 1px solid  ${({theme})=>theme.typeBoxText};
     padding: 3px;
     margin: 4px;
 }
 
 .active-value{
-    border: 1px solid;
+    border: 1px solid  ${({theme})=>theme.typeBoxText};
+    // color :  ${({theme})=>theme.typeBoxText}
     padding: 3px;
     margin: 4px;
     margin-top: -4px;

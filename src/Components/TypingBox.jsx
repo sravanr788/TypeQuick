@@ -1,5 +1,4 @@
 import { Dialog, DialogTitle } from "@material-ui/core";
-import { wordsList } from "random-words";
 import React, {
   createRef,
   useEffect,
@@ -11,24 +10,18 @@ import React, {
 import { useTestMode } from "../Context/TestModeContext";
 import Stats from "./Stats";
 import UpperMenu from "./UpperMenu";
-var randomWords = require("random-words");
+import { generate } from "random-words";
+import { Refresh, RefreshRounded } from "@mui/icons-material";
 
 const TypingBox = () => {
-  // in react you get a hook , useRef()
-  // react also provides a function, createRef()
-
   const { testSeconds, testWords, testMode } = useTestMode();
-  const [initialRender, setInitialRender] = useState(false);  
+  const [initialRender, setInitialRender] = useState(false);
   const [words, setWords] = useState(() => {
     if (testMode === "word") {
-      return randomWords(testWords);
+      return generate(testWords);
     }
-    return randomWords(300);
+    return generate(300);
   });
-
-//   const words = useMemo(() => {
-//     return wordsArray;
-//   }, [wordsArray]);
 
   const [currCharIndex, setCurrCharIndex] = useState(0);
   const [currWordIndex, setCurrWordIndex] = useState(0);
@@ -36,14 +29,12 @@ const TypingBox = () => {
     if (testMode === "word") {
       return 180;
     }
-
     return testSeconds;
   });
   const [testTime, setTestTime] = useState(() => {
     if (testMode === "word") {
       return 180;
     }
-
     return testSeconds;
   });
   const [correctChars, setCorrectChars] = useState(0);
@@ -57,11 +48,11 @@ const TypingBox = () => {
   const [intervalId, setIntervalId] = useState(null);
   const [open, setOpen] = useState(false);
 
-  const emptySpans = ()=>{
+  const emptySpans = () => {
     return Array(words.length)
-    .fill(0)
-    .map((i) => createRef(null));
-  }
+      .fill(0)
+      .map((i) => createRef(null));
+  };
   const inputRef = useRef(null);
   const [wordSpanRef, setWordSpanRef] = useState(emptySpans());
 
@@ -73,16 +64,16 @@ const TypingBox = () => {
     clearInterval(intervalId);
 
     if (testMode === "word") {
-      setWords(randomWords(testWords));
-      setWordSpanRef(emptySpans());
+      setWords(generate(testWords));
       setCountDown(180);
       setTestTime(180);
     } else {
-      setWords(randomWords(300));
-      setWordSpanRef(emptySpans());
+      setWords(generate(300));
       setCountDown(testSeconds);
       setTestTime(testSeconds);
     }
+
+    setWordSpanRef(emptySpans()); // Reset wordSpanRef correctly
     setGraphData([]);
     setCorrectChars(0);
     setCorrectWords(0);
@@ -116,15 +107,12 @@ const TypingBox = () => {
     focusInput();
   };
 
-
   const startTimer = () => {
     const intervalId = setInterval(timer, 1000);
     setIntervalId(intervalId);
     function timer() {
-      // console.log("timer function is working");
       setCountDown((prevCountDown) => {
         setCorrectChars((correctChars) => {
-          // console.log("correct chars",correctChars);
           setGraphData((data) => {
             return [
               ...data,
@@ -150,7 +138,6 @@ const TypingBox = () => {
   };
 
   const handleKeyDown = (e) => {
-    console.log(e);
     if (e.keyCode === 9) {
       if (testStart) {
         clearInterval(intervalId);
@@ -160,7 +147,7 @@ const TypingBox = () => {
       return;
     }
 
-    let allChildSpans = wordSpanRef[currWordIndex].current.childNodes;
+    let allChildSpans = wordSpanRef[currWordIndex]?.current?.childNodes;
 
     if (e.keyCode !== 8 && e.key.length > 1) {
       e.preventDefault();
@@ -172,7 +159,7 @@ const TypingBox = () => {
       setTestStart(true);
     }
 
-    //logic for space press -> increase my currWordIndex by 1
+    // Logic for space press
     if (e.keyCode === 32) {
       if (currWordIndex === words.length - 1) {
         clearInterval(intervalId);
@@ -182,17 +169,16 @@ const TypingBox = () => {
       }
 
       const correctChars =
-        wordSpanRef[currWordIndex].current.querySelectorAll(".correct");
+        wordSpanRef[currWordIndex]?.current?.querySelectorAll(".correct");
 
-      if (correctChars.length === allChildSpans.length) {
+      if (correctChars && correctChars.length === allChildSpans.length) {
         setCorrectWords(correctWords + 1);
       }
-      //removing cursor
-      if (allChildSpans.length <= currCharIndex) {
-        //cursor present as a right one
-        allChildSpans[currCharIndex - 1].classList.remove("right-current");
+
+      // Removing cursor
+      if (allChildSpans && allChildSpans.length <= currCharIndex) {
+        allChildSpans[currCharIndex - 1]?.classList.remove("right-current");
       } else {
-        //cursor in between
         setMissedChars(missedChars + (allChildSpans.length - currCharIndex));
         for (let i = currCharIndex; i < allChildSpans.length; i++) {
           allChildSpans[i].className += " skipped";
@@ -202,29 +188,30 @@ const TypingBox = () => {
         ].className.replace("current", "");
       }
 
-      //scrollinig line condition
+      // Scrolling line condition
       if (
-        wordSpanRef[currWordIndex + 1].current.offsetLeft <
-        wordSpanRef[currWordIndex].current.offsetLeft
+        wordSpanRef[currWordIndex + 1]?.current?.offsetLeft <
+        wordSpanRef[currWordIndex]?.current?.offsetLeft
       ) {
-        wordSpanRef[currWordIndex].current.scrollIntoView();
+        wordSpanRef[currWordIndex]?.current?.scrollIntoView();
       }
 
-      wordSpanRef[currWordIndex + 1].current.childNodes[0].className =
-        "char current";
+      wordSpanRef[currWordIndex + 1]?.current?.childNodes[0]?.classList.add(
+        "current"
+      );
       setCurrWordIndex(currWordIndex + 1);
       setCurrCharIndex(0);
 
       return;
     }
 
-    //logic for backspace
+    // Logic for backspace
     if (e.keyCode === 8) {
       if (currCharIndex !== 0) {
         if (currCharIndex === allChildSpans.length) {
-          if (allChildSpans[currCharIndex - 1].className.includes("extra")) {
+          if (allChildSpans[currCharIndex - 1]?.className.includes("extra")) {
             allChildSpans[currCharIndex - 1].remove();
-            allChildSpans[currCharIndex - 2].className += " right-current";
+            allChildSpans[currCharIndex - 2]?.classList.add("right-current");
           } else {
             allChildSpans[currCharIndex - 1].className = "char current";
           }
@@ -242,14 +229,13 @@ const TypingBox = () => {
     }
 
     if (currCharIndex === allChildSpans.length) {
-      //add new extra characters
-
+      // Add new extra characters
       setExtraChars(extraChars + 1);
-      let newSpan = document.createElement("span"); // -> <span></span>
+      let newSpan = document.createElement("span");
       newSpan.innerText = e.key;
       newSpan.className = "char incorrect extra right-current";
-      allChildSpans[currCharIndex - 1].classList.remove("right-current");
-      wordSpanRef[currWordIndex].current.append(newSpan);
+      allChildSpans[currCharIndex - 1]?.classList.remove("right-current");
+      wordSpanRef[currWordIndex]?.current.append(newSpan);
       setCurrCharIndex(currCharIndex + 1);
       return;
     }
@@ -281,14 +267,14 @@ const TypingBox = () => {
 
   const handleDialogBoxEvents = (e) => {
     if (e.keyCode === 32) {
-      //logic for redo game
+      // Logic for redo game
       e.preventDefault();
       redoTest();
       setOpen(false);
       return;
     }
     if (e.keyCode === 9 || e.keyCode === 13) {
-      //logic for reset game
+      // Logic for reset game
       e.preventDefault();
       resetTest();
       setOpen(false);
@@ -301,15 +287,15 @@ const TypingBox = () => {
   };
 
   const resetWordSpanRefClassname = () => {
-    wordSpanRef.map((i) => {
-      Array.from(i.current.childNodes).map((j) => {
+    wordSpanRef.forEach((i) => {
+      Array.from(i.current?.childNodes || []).forEach((j) => {
         if (j.className.includes("extra")) {
           j.remove();
         }
         j.className = "char";
       });
     });
-    wordSpanRef[0].current.childNodes[0].className = "char current";
+    wordSpanRef[0]?.current?.childNodes[0]?.classList.add("current");
   };
 
   const calculateWPM = () => {
@@ -328,22 +314,19 @@ const TypingBox = () => {
 
   useEffect(() => {
     focusInput();
-    wordSpanRef[0].current.childNodes[0].className = "char current";
+    wordSpanRef[0]?.current?.childNodes[0]?.classList.add("current");
   }, []);
 
   useLayoutEffect(() => {
-    if(initialRender){
-        console.log("running");
-        resetTest();
+    if (initialRender) {
+      resetTest();
+    } else {
+      setInitialRender(true);
     }
-    else{
-        setInitialRender(true);
-    }
-   
   }, [testSeconds, testWords, testMode]);
 
   return (
-    <div>
+    <div >
       <UpperMenu countDown={countDown} currWordIndex={currWordIndex} />
       {testEnd ? (
         <Stats
@@ -360,9 +343,11 @@ const TypingBox = () => {
         <div className="type-box" onClick={focusInput}>
           <div className="words">
             {words.map((word, index) => (
-              <span className="word" ref={wordSpanRef[index]}>
+              <span className="word" ref={wordSpanRef[index]} key={index}>
                 {word.split("").map((char, ind) => (
-                  <span className="char">{char}</span>
+                  <span className="char" key={ind}>
+                    {char}
+                  </span>
                 ))}
               </span>
             ))}
@@ -376,6 +361,15 @@ const TypingBox = () => {
         ref={inputRef}
         onKeyDown={(e) => handleKeyDown(e)}
       />
+      <div className="reload" onClick={resetTest}
+      style={{position : "absolute" , left : "45%"}}>
+        {" "} 
+        <RefreshRounded />
+        <br />
+       <p className="p">
+        Restart Test 
+        </p>
+      </div>
 
       <Dialog
         open={open}

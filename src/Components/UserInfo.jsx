@@ -19,7 +19,7 @@ const UserInfo = ({totalTestTaken}) => {
                     {user.email}
                 </div>
                 <div className="joined-at">
-                    {user.metadata.creationTime}
+                   Joined at :  {user.metadata.creationTime}
                 </div>
             </div>
         </div>

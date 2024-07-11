@@ -115,9 +115,7 @@ const AccountIcon = () => {
     }
     const {theme} = useTheme();
     const classes = useStyles();
-    console.log(classes);
-    console.log(value);
-    
+
   return (
     <div>
         <AccountCircleIcon onClick={handleOpen}/>
@@ -150,12 +148,6 @@ const AccountIcon = () => {
                         onClick={signInWithGoogle}
                     />
                 </Box>
-                {/* <Box>
-                    <span>OR</span>
-                    <div className='github-button' onClick={signInWithGithub}>
-                        Login with Github
-                    </div>
-                </Box> */}
             </div>
         </Modal>
     </div>

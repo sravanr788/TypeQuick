@@ -27,10 +27,10 @@ const Footer = () => {
 
       <div className="actual-footer">
         <div className="links">
-          <a href='https://github.com/utkarsh-dubey' target="_blank">
+          <a href='https://github.com/sravanr788' target="_blank">
           <GitHubIcon style={{marginRight:'4px'}}/>
           </a>
-          <a href='https://www.linkedin.com/in/utkarsh2504/' target="_blank">
+          <a href='https://www.linkedin.com/in/sravan-teja-reddy-b37680289/' target="_blank">
           <LinkedInIcon/>
           </a>
             

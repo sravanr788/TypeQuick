@@ -2,7 +2,6 @@ import { Box, Button, TextField } from '@mui/material'
 import React, { useState } from 'react'
 import { auth } from '../firebaseConfig';
 import { useAlert } from '../Context/AlertContext';
-import { themeOptions } from '../Utils/theme';
 import { useTheme } from '../Context/ThemeContext';
 import errorMapping from '../Utils/errorMapping';
 
