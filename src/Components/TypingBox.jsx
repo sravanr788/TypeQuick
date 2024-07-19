@@ -340,6 +340,7 @@ const TypingBox = () => {
           resetTest={resetTest}
         />
       ) : (
+        <>
         <div className="type-box" onClick={focusInput}>
           <div className="words">
             {words.map((word, index) => (
@@ -352,16 +353,8 @@ const TypingBox = () => {
               </span>
             ))}
           </div>
-        </div>
-      )}
-
-      <input
-        type="text"
-        className="hidden-input"
-        ref={inputRef}
-        onKeyDown={(e) => handleKeyDown(e)}
-      />
-      <div className="reload" onClick={resetTest}
+          </div>
+          <div className="reload" onClick={resetTest}
       style={{position : "absolute" , left : "45%"}}>
         {" "} 
         <RefreshRounded />
@@ -370,6 +363,16 @@ const TypingBox = () => {
         Restart Test 
         </p>
       </div>
+        </>
+      )}
+
+      <input
+        type="text"
+        className="hidden-input"
+        ref={inputRef}
+        onKeyDown={(e) => handleKeyDown(e)}
+      />
+     
 
       <Dialog
         open={open}
